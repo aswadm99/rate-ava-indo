@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rate Ava Indo — Hubungkan Akun Roblox</title>
+<style>
+  body{font-family:system-ui,sans-serif;max-width:560px;margin:48px auto;padding:0 16px;line-height:1.6;text-align:center}
+  a.btn{display:inline-block;background:#335fff;color:#fff;padding:14px 24px;border-radius:10px;text-decoration:none;font-weight:600}
+  small a{color:#555}
+</style>
+</head>
+<body>
+  <h1>Rate Ava Indo</h1>
+  <div id="content">
+    <p>Hubungkan akun Roblox-mu agar game bisa membaca inventory-mu. Kamu akan diminta menyetujui izin di halaman Roblox.</p>
+    <p><a class="btn" href="https://avaindo-loader.aswadm6399.workers.dev/login">Hubungkan akun Roblox</a></p>
+  </div>
+  <p><small><a href="privacy.html">Kebijakan Privasi</a> · <a href="terms.html">Ketentuan Layanan</a></small></p>
+
+<script>
+  // Setelah pemain menyetujui, Roblox kembali ke halaman ini dengan ?code=...&state=...
+  // Kita teruskan ke Worker, karena penukaran code -> token butuh Client Secret
+  // yang tidak boleh ada di website publik.
+  var p = new URLSearchParams(location.search);
+  var box = document.getElementById("content");
+  if (p.get("error")) {
+    box.innerHTML = "<p>Izin tidak diberikan atau terjadi kesalahan. <a href='./'>Coba lagi</a></p>";
+  } else if (p.get("code") && p.get("state")) {
+    box.innerHTML = "<p>Menghubungkan akun...</p>";
+    location.replace(
+      "https://avaindo-loader.aswadm6399.workers.dev/callback?code=" +
+      encodeURIComponent(p.get("code")) + "&state=" + encodeURIComponent(p.get("state"))
+    );
+  }
+</script>
+</body>
+</html>
